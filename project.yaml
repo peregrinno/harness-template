@@ -1,0 +1,113 @@
+# =============================================================================
+# project.yaml — Single source of project identity for the harness hub
+# Copy this folder into any workspace, fill this file, then follow INSTALL.md
+# =============================================================================
+
+project:
+  name: "example-platform"
+  slug: "example-platform"
+  description: "Full-cycle microservices platform orchestrated by harness engineering"
+  organization: "your-org"
+  primary_language_ui: "pt-BR"   # Agent replies to humans in Portuguese
+  vault_language: "en"          # Obsidian knowledge always in English
+  sdd_spec_language: "pt-BR"    # Specs written in Portuguese for human validation
+  sdd_artifact_language: "en"   # Designs, ADRs, sprints, tasks in English (agent-facing)
+
+# GitHub / branching
+github:
+  org: "your-org"
+  default_visibility: "private"
+  branch_model:
+    mainline: ["master", "stage", "develop"]  # master <- stage <- develop
+    feature_pattern: "feature/fix({number})/{slug}"
+    commit_pattern: "{seq:03d}-{brief-kebab-title}"
+  coverage:
+    total_minimum: 60
+    new_code_minimum: 80
+
+# Polyrepo inventory — each entry becomes (or already is) its own GitHub repository
+repositories:
+  services:
+    - name: "service-example"
+      intent: "health and ping domain example"
+      path: "scaffolds/service-example"   # local scaffold path inside the hub
+      remote: ""                        # e.g. https://github.com/your-org/service-example.git
+      port: 8001
+      python: "3.13"
+      package_manager: "uv"
+      databases: ["postgresql"]         # postgresql | mongodb | none
+      messaging: ["rabbitmq"]
+      cache: ["redis"]
+
+  frontends:
+    - name: "ui-example"
+      context: "example admin surface"
+      path: "scaffolds/ui-example"
+      remote: ""
+      port: 3000
+      package_manager: "yarn"
+      framework: "next"
+      design_system: "antd"
+
+# Shared infrastructure expected to be already running via harness/scripts/windows
+infra:
+  postgresql:
+    version: "17"
+    host: "localhost"
+    port: 5432
+    database: "platform"
+    user: "platform"
+    password: "platform"
+  redis:
+    host: "localhost"
+    port: 6379
+  rabbitmq:
+    host: "localhost"
+    port: 5672
+    management_port: 15672
+    user: "guest"
+    password: "guest"
+  mongodb:
+    enabled: false          # set true when a service requests MongoDB
+    host: "localhost"
+    port: 27017
+
+# Human gates (SDD)
+gates:
+  approve_spec: true
+  approve_before_implementation: true
+  max_qa_security_review_retries: 3
+  escalate_to_human_after_retries: true
+
+# Agent policy
+agents:
+  always_reply_user_in: "pt-BR"
+  code_and_reasoning_in: "en"
+  docstrings_in: "pt-BR"
+  require_qa_on_every_task: true
+  require_security_analyst: true
+  require_code_reviewer: true
+  prefer_parallel_subagents: true
+  auto_fix_critical_security: true
+
+# Stack defaults (do not change casually — update vault + constitutions if you do)
+stack:
+  backend:
+    language: "python"
+    version: "3.13"
+    package_manager: "uv"
+    framework: "fastapi"
+    orm: "sqlalchemy2-async"
+    migrations: "alembic"
+    architecture: "hexagonal"
+    tests: ["unit", "acceptance"]
+    pre_commit: ["ruff", "pytest", "semver-check"]
+  frontend:
+    language: "typescript"
+    package_manager: "yarn"
+    ui: "react"
+    framework: "next"
+    design_lib: "antd"
+    antd_llm_txt: "https://ant.design/docs/react/introduce.md"
+    architecture: "atomic"
+    tests: ["component", "e2e-playwright"]

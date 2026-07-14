@@ -1,0 +1,17 @@
+---
+description: Core harness behavior — language, map, gates, delivery order
+alwaysApply: true
+---
+
+# Harness Core
+
+- Always read `AGENTS.md` then `project.yaml` before acting.
+- Reply to the user in **Portuguese**. Code, reasoning, vault notes, designs/tasks: **English**. Docstrings: **Portuguese**.
+- Follow `INSTALL.md` if `harness/.setup-complete` is missing.
+- SDD and delivery workflows: `harness/workflows/sdd.md`, `delivery-loop.md`, `parallel-orchestration.md`.
+- Constitutions: `harness/constitutions/backend.md`, `frontend.md`.
+- Assume infra from `harness/scripts/windows/start-all.bat` is already running — do not duplicate services.
+- Every product code task implicitly requires QA → security-analyst → code-reviewer.
+- Auto-fix critical security findings; escalate to human after `gates.max_qa_security_review_retries`.
+- Prefer parallel subagents for independent work.
+- Keep `AGENTS.md` short; put deep knowledge in `vault/` (English) and harness docs.

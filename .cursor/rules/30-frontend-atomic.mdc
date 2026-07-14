@@ -1,0 +1,16 @@
+---
+description: Frontend Atomic Design Next.js + Ant Design standards
+globs: "**/ui-*/**/*,**/scaffolds/ui-*/**/*"
+alwaysApply: false
+---
+
+# Frontend Atomic
+
+Read and obey `harness/constitutions/frontend.md`.
+
+- TypeScript + yarn + React + Next.js App Router + Ant Design.
+- Prefer latest stable antd, then align React/Next.
+- Atomic layers; no upward imports.
+- Component tests + Playwright e2e.
+- LLM reference: https://ant.design/docs/react/introduce.md
+- Repo name must be `ui-<context>`.

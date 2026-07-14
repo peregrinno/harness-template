@@ -1,0 +1,16 @@
+---
+description: Backend hexagonal FastAPI + SQLAlchemy async standards
+globs: "**/service-*/**/*,**/scaffolds/service-*/**/*"
+alwaysApply: false
+---
+
+# Backend Hexagonal
+
+Read and obey `harness/constitutions/backend.md`.
+
+- Python 3.13 + uv + FastAPI + SQLAlchemy 2 async + Alembic.
+- Hexagonal layout under `app/src/{domain,use_cases,ports,adapters}`.
+- Absolute imports from `app`. Empty `__init__.py`.
+- Unit + acceptance tests only inside the service. No cross-service integration tests here.
+- Async connectors only. Named arguments. Docstrings in Portuguese.
+- Repo name must be `service-<intent>`.

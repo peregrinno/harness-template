@@ -1,0 +1,12 @@
+---
+description: Obsidian vault feeding and changelog discipline
+alwaysApply: true
+---
+
+# Vault Obsidian
+
+- Knowledge in `vault/` is always **English**.
+- Keep structure: `00-index`, `10-architecture`, `20-domains`, `30-services`, `40-frontends`, `50-operations`, `60-security`, `70-changelogs`, `90-references`.
+- Use Obsidian-friendly wikilinks, tags (`#service`, `#adr`, `#feature`), and folder notes — avoid dumping loose files at vault root.
+- After each implemented feature: add/update domain/service notes + entry in `vault/70-changelogs/`.
+- Map new functionality so future Specs do not start from zero.

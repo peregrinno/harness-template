@@ -1,0 +1,16 @@
+.DS_Store
+Thumbs.db
+harness/.setup-complete
+**/.venv/
+**/node_modules/
+**/.next/
+**/__pycache__/
+**/.pytest_cache/
+**/.coverage
+**/htmlcov/
+**/playwright-report/
+**/test-results/
+*.log
+.env
+.env.*
+!.env.example

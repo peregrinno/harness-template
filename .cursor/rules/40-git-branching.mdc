@@ -1,0 +1,15 @@
+---
+description: Git branching, commits, polyrepo naming
+alwaysApply: true
+---
+
+# Git & Polyrepo
+
+- Mainline: `master <- stage <- develop`.
+- Features: `feature/fix(<number>)/<slug>`.
+- Commits: `<seq:03d>-<brief-kebab-title>` (example `001-add-health-endpoint`).
+- Backends: `service-<intent>`; frontends: `ui-<context>`.
+- This hub orchestrates; product code lives in separate GitHub repos (polyrepo).
+- Subagents: each owns commit + push on the feature branch.
+- Orchestrator: residual commit for leftovers.
+- Before coding: create the feature branch from `develop`.

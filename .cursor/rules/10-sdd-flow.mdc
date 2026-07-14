@@ -1,0 +1,14 @@
+---
+description: SDD flow Spec → Designs → ADRs → Sprints → Tasks with human gates
+alwaysApply: true
+---
+
+# SDD Flow
+
+Follow `harness/workflows/sdd.md` strictly.
+
+1. New capability request → draft `sdd/<NNN>-<slug>/SPEC.md` in **Portuguese** using vault + constitutions → **STOP** for human approval.
+2. On Spec approval → generate Designs, ADRs, Sprints, Tasks in **English** without asking whether to continue → **STOP** and ask if the pack is OK to implement.
+3. On pack approval → create feature branches, orchestrate parallel implementation, run delivery loop until done.
+4. Update task status files as work finishes; write changelog under `vault/70-changelogs/`.
+5. Never skip Spec→Designs→ADRs→Sprints→Tasks order.
