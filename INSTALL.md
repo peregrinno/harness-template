@@ -47,6 +47,7 @@ Quando o usuário disser “instalar harness” / “fazer setup” / “bootstr
 | `10-sdd-flow.mdc` | true | Spec→Designs→ADRs→Sprints→Tasks |
 | `20-backend-hexagonal.mdc` | false | backend + loguru + lifespan |
 | `25-data.mdc` | false | data constitution |
+| `26-messaging.mdc` | false | messaging / RabbitMQ constitution |
 | `30-frontend-atomic.mdc` | false | frontend + supply visual |
 | `40-git-branching.mdc` | true | branches / commits |
 | `50-vault-obsidian.mdc` | true | vault + changelog |
@@ -127,6 +128,7 @@ Responda em português. Não inicie SDD até eu confirmar o project.yaml.
 - [ ] Templates de deploy copiados/documentados
 - [ ] `harness/.setup-complete` existe
 - [ ] Stack: SQLAlchemy 2 async, loguru, lifespan pings, testes unit+acceptance
+- [ ] Constitutions data + messaging conhecidas pelo agente
 
 ---
 

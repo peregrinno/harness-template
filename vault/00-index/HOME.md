@@ -6,6 +6,7 @@ Central map for the Obsidian vault (English knowledge). Open this folder as an O
 
 - [[Local Runtime Modes]]
 - [[Architecture Overview]]
+- [[Messaging Practice]]
 - [[Branching and Repositories]]
 - [[Harness Operating Model]]
 - [[ADR-000-sqlalchemy-async-not-gino]]

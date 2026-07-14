@@ -23,6 +23,7 @@ Um **hub polyrepo**, não um monólito de produto:
 - **Arquitetura**: microserviços + RabbitMQ + Redis + PostgreSQL 17 (+ MongoDB sob demanda)
 - **Backend**: Python 3.13, uv, FastAPI, SQLAlchemy 2.0 async, Alembic, loguru, hexagonal, unit + acceptance
 - **Dados**: database-per-service (`harness/constitutions/data.md`)
+- **Mensageria**: RabbitMQ async, outbox/inbox, contratos versionados (`harness/constitutions/messaging.md`)
 - **Frontend**: TypeScript, yarn, React, Next.js, Ant Design, atomic, Playwright (+ `harness/supply/` para marca)
 - **Runtime local**: `bundled_infra` ou `external_infra` (`project.yaml`)
 - **Deploy**: Railway ou Portainer (`project.yaml → deploy.target`)

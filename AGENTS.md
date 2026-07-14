@@ -28,6 +28,7 @@ You operate inside a **Harness Engineering hub** (polyrepo orchestration + Obsid
 | Install / unlock | `INSTALL.md` |
 | Backend rules | `harness/constitutions/backend.md` |
 | Data / persistence | `harness/constitutions/data.md` |
+| Messaging (RabbitMQ) | `harness/constitutions/messaging.md` |
 | Frontend rules | `harness/constitutions/frontend.md` |
 | Visual supply | `harness/supply/` |
 | Deploy templates | `harness/templates/deploy/` |
@@ -63,6 +64,7 @@ You operate inside a **Harness Engineering hub** (polyrepo orchestration + Obsid
 
 - Backend: Python 3.13, uv, FastAPI, SQLAlchemy 2 async, Alembic, **loguru**, lifespan dependency pings, hexagonal, unit + acceptance.
 - Data: database-per-service — see `harness/constitutions/data.md`.
+- Messaging: RabbitMQ async, outbox/inbox, versioned envelopes — see `harness/constitutions/messaging.md`.
 - Frontend: TypeScript, yarn, React, Next.js, Ant Design, atomic design; brand from `harness/supply/`.
 - Infra: PostgreSQL 17, Redis, RabbitMQ; MongoDB when enabled.
 - Deploy: `railway` or `portainer` via `project.yaml → deploy.target`.

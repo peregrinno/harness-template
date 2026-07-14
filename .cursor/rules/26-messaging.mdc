@@ -1,0 +1,14 @@
+---
+description: Messaging constitution for RabbitMQ microservices
+globs: "**/adapters/**/*consumer*,**/adapters/**/*publisher*,**/ports/i_*publisher*,**/ports/i_*consumer*,**/service-*/**/*,**/scaffolds/service-*/**/*"
+alwaysApply: false
+---
+
+# Messaging Constitution
+
+Read and obey `harness/constitutions/messaging.md`.
+
+- RabbitMQ + async (`aio-pika`); hexagonal publishers/consumers.
+- Versioned envelopes; at-least-once + consumer idempotency; outbox for business facts.
+- Naming: `ex.*`, `q.<service>.*`, routing keys `<context>.<entity>.<event>.vN`.
+- DLQ + bounded retries; no broker-as-database.

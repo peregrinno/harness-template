@@ -125,6 +125,10 @@ stack:
   data:
     constitution: "harness/constitutions/data.md"
     ownership: "database-per-service"
+  messaging:
+    broker: "rabbitmq"
+    client: "aio-pika"
+    constitution: "harness/constitutions/messaging.md"
   frontend:
     language: "typescript"
     package_manager: "yarn"

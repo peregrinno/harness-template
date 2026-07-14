@@ -19,7 +19,7 @@ Before planning, check `.cursor/skills/` for scaffold/update skills.
 | ORM | **SQLAlchemy 2.0 async** |
 | Migrations | **Alembic** |
 | Architecture | **Hexagonal (Ports & Adapters)** |
-| Messaging | RabbitMQ (async connectors) |
+| Messaging | RabbitMQ async — see `harness/constitutions/messaging.md` |
 | Cache | Redis (async) |
 | Primary DB | PostgreSQL **17** |
 | Optional DB | MongoDB (only when `project.yaml` enables it) |
@@ -28,6 +28,7 @@ Before planning, check `.cursor/skills/` for scaffold/update skills.
 | Tests inside service | **unit** + **acceptance** |
 | Cross-service e2e | **QA agent only** (not inside the service repo) |
 | Data standards | See `harness/constitutions/data.md` |
+| Messaging standards | See `harness/constitutions/messaging.md` |
 
 ### Async Connectors Policy
 Every library that talks to DB, cache, broker, or external HTTP must use **async** clients/drivers.

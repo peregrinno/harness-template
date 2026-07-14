@@ -15,8 +15,9 @@ description: Scaffold a new polyrepo FastAPI service (service-<intent>) from the
 6. Copy CI from `harness/templates/github-ci/service-ci.yml` into `.github/workflows/ci.yml`.
 7. Copy deploy manifests from `harness/templates/deploy/<project.yaml deploy.target>/`.
 8. Obey `harness/constitutions/data.md` for schema design.
-9. Register the service in `project.yaml` and add `vault/30-services/<name>.md` (English).
-10. Update this skill if defaults change — keep skills non-legacy.
+9. Obey `harness/constitutions/messaging.md` for RabbitMQ publishers/consumers.
+10. Register the service in `project.yaml` and add `vault/30-services/<name>.md` (English).
+11. Update this skill if defaults change — keep skills non-legacy.
 
 ## Do not
 

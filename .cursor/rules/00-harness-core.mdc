@@ -9,7 +9,7 @@ alwaysApply: true
 - Reply to the user in **Portuguese**. Code, reasoning, vault notes, designs/tasks: **English**. Docstrings: **Portuguese**.
 - Follow `INSTALL.md` if `harness/.setup-complete` is missing.
 - SDD and delivery workflows: `harness/workflows/sdd.md`, `delivery-loop.md`, `parallel-orchestration.md`.
-- Constitutions: `harness/constitutions/backend.md`, `frontend.md`, `data.md`.
+- Constitutions: `harness/constitutions/backend.md`, `frontend.md`, `data.md`, `messaging.md`.
 - Visual supply: `harness/supply/` (assets + `visual-identity.md`).
 - Local runtime: `project.yaml → runtime.local_mode` (`bundled_infra` | `external_infra`); use `harness/scripts/windows/start-all.bat` — do not spawn duplicate infra.
 - Deploy target: `project.yaml → deploy.target` (`railway` | `portainer`); templates under `harness/templates/deploy/`.

@@ -110,7 +110,7 @@ Do not prefix tables with the service name (`billing_orders`) inside a dedicated
 
 - Redis: keys namespaced `svc:<intent>:<purpose>:<id>`; always TTL for cache entries.
 - Do not treat Redis as system of record unless ADR says so (sessions/ephemeral ok).
-- RabbitMQ: routing keys `svc.<intent>.<event>`; payloads versioned; consumers idempotent.
+- RabbitMQ naming, envelopes, outbox/inbox, DLQ: **defer to** `harness/constitutions/messaging.md` (this file only forbids treating the broker as a database of record).
 
 ## 7. Multi-tenancy (if applicable)
 

@@ -12,7 +12,7 @@ Read and obey `harness/constitutions/backend.md`.
 - Hexagonal layout under `app/src/{core,domain,use_cases,ports,adapters}`.
 - `app/src/core/logging.py` is the only loguru configuration entrypoint.
 - Customize FastAPI `lifespan` to ping Postgres/Redis/Rabbit(/Mongo) and other required deps.
-- Also obey `harness/constitutions/data.md` for schema/index/FK rules.
+- Also obey `harness/constitutions/data.md` and `harness/constitutions/messaging.md`.
 - Absolute imports from `app`. Empty `__init__.py`.
 - Unit + acceptance tests only inside the service. No cross-service integration tests here.
 - Async connectors only. Named arguments. Docstrings in Portuguese.
