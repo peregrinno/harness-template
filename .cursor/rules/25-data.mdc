@@ -1,6 +1,6 @@
 ---
 description: Data & persistence constitution for microservices
-globs: "**/alembic/**/*,**/adapters/outbound/**/*,**/service-*/**/*,**/scaffolds/service-*/**/*"
+globs: "**/repos/service-*/**/*,**/alembic/**/*,**/adapters/outbound/**/*,**/service-*/**/*,**/scaffolds/service-*/**/*"
 alwaysApply: false
 ---
 

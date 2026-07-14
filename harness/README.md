@@ -10,6 +10,6 @@ Outer harness assets for the hub:
 | `sensors/` | Deterministic checks (semver, docs) |
 | `templates/github-ci/` | Portable CI with coverage gates |
 | `templates/deploy/` | Railway + Portainer manifests |
-| `scripts/windows/` | `start-all.bat` (`bundled_infra` \| `external_infra`) |
+| `scripts/windows/` | `start-all.bat` (`bundled_infra` \| `external_infra`); apps from `../repos/` |
 
 Skills should be refreshed when these files change so they do not go stale.

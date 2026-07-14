@@ -5,6 +5,7 @@ Central map for the Obsidian vault (English knowledge). Open this folder as an O
 ## Navigation
 
 - [[Local Runtime Modes]]
+- [[Workspace Layout]]
 - [[Architecture Overview]]
 - [[Messaging Practice]]
 - [[Branching and Repositories]]

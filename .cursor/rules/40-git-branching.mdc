@@ -9,7 +9,9 @@ alwaysApply: true
 - Features: `feature/fix(<number>)/<slug>`.
 - Commits: `<seq:03d>-<brief-kebab-title>` (example `001-add-health-endpoint`).
 - Backends: `service-<intent>`; frontends: `ui-<context>`.
-- This hub orchestrates; product code lives in separate GitHub repos (polyrepo).
+- Working copies live under `<workspace>/repos/<name>` (hub-relative path `../repos/<name>` in `project.yaml`).
+- Hub `scaffolds/` are molds only; after INSTALL, implement in `repos/`.
+- This hub orchestrates; each product folder under `repos/` is its own GitHub repository.
 - Subagents: each owns commit + push on the feature branch.
-- Orchestrator: residual commit for leftovers.
-- Before coding: create the feature branch from `develop`.
+- Orchestrator: residual commit for leftovers (hub and/or remaining repo files).
+- Before coding: create the feature branch from `develop` in the impacted repo under `repos/`.

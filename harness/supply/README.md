@@ -16,4 +16,4 @@ harness/supply/
 2. Prefer files under `assets/` (reference by relative path from the hub) over generating placeholder art when a suitable asset exists.
 3. When creating frontend work, sync Ant Design `ConfigProvider` tokens with the identity tokens documented in `visual-identity.md`.
 4. If identity is still `TODO`, ask the human before shipping brand-critical screens.
-5. Keep binary assets here (hub), not scattered across polyrepos — copy or reference into `ui-*` only when the UI build needs them locally.
+5. Keep binary assets here (hub), not scattered across polyrepos — copy into `../repos/ui-*` only when the UI build needs them locally.

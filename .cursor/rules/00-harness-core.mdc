@@ -8,6 +8,7 @@ alwaysApply: true
 - Always read `AGENTS.md` then `project.yaml` before acting.
 - Reply to the user in **Portuguese**. Code, reasoning, vault notes, designs/tasks: **English**. Docstrings: **Portuguese**.
 - Follow `INSTALL.md` if `harness/.setup-complete` is missing.
+- Canonical layout: `<workspace>/harness-hub` + `<workspace>/repos/<name>` + **`<workspace>/.cursor/`**. During INSTALL, move hub `.cursor` to the workspace root so Cursor loads rules/agents/skills. See `vault/50-operations/Workspace Layout.md`. Implement product code in `project.yaml` paths (`../repos/...`), not in `scaffolds/` after bootstrap.
 - SDD and delivery workflows: `harness/workflows/sdd.md`, `delivery-loop.md`, `parallel-orchestration.md`.
 - Constitutions: `harness/constitutions/backend.md`, `frontend.md`, `data.md`, `messaging.md`.
 - Visual supply: `harness/supply/` (assets + `visual-identity.md`).
