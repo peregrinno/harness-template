@@ -6,9 +6,13 @@ tags: #frontend
 
 Example Next.js + Ant Design admin/health surface.
 
-## Local path
+## Paths
 
-`scaffolds/ui-example`
+| Role | Location |
+| --- | --- |
+| Mold (hub) | `scaffolds/ui-example` |
+| Working copy | `../repos/ui-example` (relative to hub) |
+| GitHub | set `remote` in `project.yaml` after publish |
 
 ## Port
 

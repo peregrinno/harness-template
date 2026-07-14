@@ -1,6 +1,6 @@
 ---
 description: Backend hexagonal FastAPI + SQLAlchemy async standards
-globs: "**/service-*/**/*,**/scaffolds/service-*/**/*"
+globs: "**/repos/service-*/**/*,**/service-*/**/*,**/scaffolds/service-*/**/*"
 alwaysApply: false
 ---
 

@@ -1,6 +1,6 @@
 ---
 description: Frontend Atomic Design Next.js + Ant Design standards
-globs: "**/ui-*/**/*,**/scaffolds/ui-*/**/*"
+globs: "**/repos/ui-*/**/*,**/ui-*/**/*,**/scaffolds/ui-*/**/*"
 alwaysApply: false
 ---
 

@@ -4,7 +4,7 @@
 
 ## Contexto
 
-Hub harness polyrepo com scaffolds `service-example` e `ui-example`.
+Hub harness polyrepo com layout `harness-hub` + `repos/`. Moldes: `scaffolds/service-example` e `scaffolds/ui-example`; working copies em `../repos/`.
 
 ## Problema
 

@@ -38,7 +38,7 @@ The agent MUST read, in order:
 3. `vault/00-index/HOME.md` and relevant vault notes
 4. `harness/constitutions/*`
 5. Existing related specs under `sdd/`
-6. Target service/UI README if repos are already cloned
+6. Target service/UI README under `../repos/<name>` (paths from `project.yaml`)
 
 Never start from zero inventing architecture.
 

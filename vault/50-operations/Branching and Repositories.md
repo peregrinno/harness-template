@@ -2,10 +2,19 @@
 
 tags: #ops
 
+## Disk layout
+
+See [[Workspace Layout]].
+
+```text
+<workspace>/harness-hub/     ← orchestration
+<workspace>/repos/<name>/    ← product git repos
+```
+
 ## Branch model
 
 `master <- stage <- develop`  
-Features: `feature/fix(<n>)/<slug>`  
+Features: `feature/SPEC(<n>)/<slug>`  
 Commits: `001-brief-kebab-title`
 
 ## Naming
@@ -15,6 +24,6 @@ Commits: `001-brief-kebab-title`
 
 ## Polyrepo
 
-Product code lives in separate GitHub repositories. This hub holds vault, SDD, reports, and orchestration intelligence.
+Product code lives under `repos/` as separate GitHub repositories. This hub holds vault, SDD, reports, scaffolds (molds), and orchestration intelligence.
 
-See `project.yaml` for inventory.
+Inventory and paths: `project.yaml` (`path: ../repos/...`, `scaffold: scaffolds/...`).

@@ -1,13 +1,13 @@
 #Requires -Version 5.1
 <#
 .SYNOPSIS
-  Starts local runtime according to project.yaml:
-    - bundled_infra  → docker compose for Postgres/Redis/Rabbit(+Mongo) then optional apps
-    - external_infra → skip compose; assume deps already listening; start optional apps
+  Starts local runtime according to project.yaml.
+  Apps are preferred from sibling ../repos/<name>; scaffolds are fallback only.
 #>
 $ErrorActionPreference = "Stop"
 $ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 $HubRoot = Resolve-Path (Join-Path $ScriptDir "..\..\..")
+$WorkspaceRoot = Split-Path -Parent $HubRoot.Path
 $ComposeFile = Join-Path $ScriptDir "docker-compose.yml"
 $ProjectYaml = Join-Path $HubRoot "project.yaml"
 
@@ -32,7 +32,20 @@ function Test-TcpPort([string]$HostName, [int]$Port, [int]$TimeoutMs = 800) {
   }
 }
 
+function Resolve-AppPath([string]$RepoName, [string]$ScaffoldRel, [string]$YamlRaw) {
+  $reposDirname = "repos"
+  if ($YamlRaw -match '(?m)^\s*repos_dirname:\s*"?([A-Za-z0-9_\-]+)"?') {
+    $reposDirname = $Matches[1]
+  }
+  $fromRepos = Join-Path (Join-Path $WorkspaceRoot $reposDirname) $RepoName
+  if (Test-Path $fromRepos) { return $fromRepos }
+  $fromScaffold = Join-Path $HubRoot $ScaffoldRel
+  if (Test-Path $fromScaffold) { return $fromScaffold }
+  return $null
+}
+
 Write-Host "==> Hub root: $HubRoot"
+Write-Host "==> Workspace root: $WorkspaceRoot"
 
 $raw = ""
 if (Test-Path $ProjectYaml) { $raw = Get-Content $ProjectYaml -Raw }
@@ -41,8 +54,7 @@ $localMode = Get-YamlScalar $raw "local_mode" "bundled_infra"
 $startApps = (Get-YamlScalar $raw "start_apps" "true") -match "^(true|1|yes)$"
 $skipIfHealthy = (Get-YamlScalar $raw "skip_infra_if_ports_healthy" "true") -match "^(true|1|yes)$"
 $mongoEnabled = $raw -match 'mongodb:\s*\r?\n(?:\s+[^\r\n]+\r?\n)*?\s+enabled:\s*true'
-$pgHost = Get-YamlScalar $raw "host" "localhost"
-# Prefer nested defaults from known ports if scalar Host matched wrong block — use fixed defaults:
+$pgHost = "localhost"
 $pgPort = 5432
 $redisPort = 6379
 $rabbitPort = 5672
@@ -103,20 +115,27 @@ function Start-BundledInfra {
 
 function Start-Apps {
   if (-not $startApps) {
-    Write-Host "==> start_apps=false — not launching service/UI windows"
-    Write-Host "    service-example: cd scaffolds\service-example && make run"
-    Write-Host "    ui-example:      cd scaffolds\ui-example && yarn dev"
+    Write-Host "==> start_apps=false — not launching app windows"
+    Write-Host "    Prefer: cd ..\repos\service-example && make run"
+    Write-Host "            cd ..\repos\ui-example && yarn dev"
     return
   }
-  $svc = Join-Path $HubRoot "scaffolds\service-example"
-  $ui = Join-Path $HubRoot "scaffolds\ui-example"
-  if (Test-Path (Join-Path $svc "Makefile")) {
-    Write-Host "==> Starting service-example"
+
+  $svc = Resolve-AppPath -RepoName "service-example" -ScaffoldRel "scaffolds\service-example" -YamlRaw $raw
+  $ui = Resolve-AppPath -RepoName "ui-example" -ScaffoldRel "scaffolds\ui-example" -YamlRaw $raw
+
+  if ($svc -and (Test-Path (Join-Path $svc "Makefile"))) {
+    Write-Host "==> Starting service-example from $svc"
     Start-Process powershell -ArgumentList "-NoExit", "-Command", "cd '$svc'; make run"
+  } else {
+    Write-Host "==> service-example not found under repos/ or scaffolds/"
   }
-  if (Test-Path (Join-Path $ui "package.json")) {
-    Write-Host "==> Starting ui-example"
+
+  if ($ui -and (Test-Path (Join-Path $ui "package.json"))) {
+    Write-Host "==> Starting ui-example from $ui"
     Start-Process powershell -ArgumentList "-NoExit", "-Command", "cd '$ui'; yarn dev"
+  } else {
+    Write-Host "==> ui-example not found under repos/ or scaffolds/"
   }
 }
 
@@ -136,4 +155,4 @@ switch ($localMode) {
   }
 }
 
-Write-Host "==> Done. Agents must reuse these ports — do not spawn duplicate infra."
+Write-Host "==> Done. Product code lives in ../repos/; hub only orchestrates."

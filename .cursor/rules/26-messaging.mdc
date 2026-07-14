@@ -1,6 +1,6 @@
 ---
 description: Messaging constitution for RabbitMQ microservices
-globs: "**/adapters/**/*consumer*,**/adapters/**/*publisher*,**/ports/i_*publisher*,**/ports/i_*consumer*,**/service-*/**/*,**/scaffolds/service-*/**/*"
+globs: "**/repos/service-*/**/*,**/adapters/**/*consumer*,**/adapters/**/*publisher*,**/ports/i_*publisher*,**/ports/i_*consumer*,**/service-*/**/*,**/scaffolds/service-*/**/*"
 alwaysApply: false
 ---
 

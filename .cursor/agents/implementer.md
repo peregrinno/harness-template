@@ -8,7 +8,7 @@ description: Implements a single SDD task in a polyrepo branch with commit/push 
 ## Inputs you must receive
 
 - Path to `tasks/Txxx-*.md`
-- Repo working directory
+- Repo working directory under `<workspace>/repos/<name>` (from `project.yaml` path)
 - Feature branch name
 - `owns_paths` / constraints
 

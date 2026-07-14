@@ -1,6 +1,6 @@
 # =============================================================================
 # project.yaml — Single source of project identity for the harness hub
-# Copy this folder into any workspace, fill this file, then follow INSTALL.md
+# Place this hub as <workspace>/<hub_dirname>/ next to <workspace>/<repos_dirname>/
 # =============================================================================
 
 project:
@@ -13,36 +13,46 @@ project:
   sdd_spec_language: "pt-BR"    # Specs written in Portuguese for human validation
   sdd_artifact_language: "en"   # Designs, ADRs, sprints, tasks in English (agent-facing)
 
+# Disk layout (canonical). Hub is THIS directory; product code lives in sibling repos/.
+workspace:
+  layout: "hub-and-repos"
+  hub_dirname: "harness-hub"    # folder name of this hub under the workspace root
+  repos_dirname: "repos"        # sibling folder for service-* and ui-* git repos
+  # Open <workspace-root> in Cursor (parent of hub + repos + .cursor).
+  # INSTALL moves hub .cursor/ → <workspace-root>/.cursor/ so Cursor loads rules.
+
 # GitHub / branching
 github:
   org: "your-org"
   default_visibility: "private"
   branch_model:
     mainline: ["master", "stage", "develop"]  # master <- stage <- develop
-    feature_pattern: "feature/fix({number})/{slug}"
+    feature_pattern: "feature/SPEC({number})/{slug}"
     commit_pattern: "{seq:03d}-{brief-kebab-title}"
   coverage:
     total_minimum: 60
     new_code_minimum: 80
 
-# Polyrepo inventory — each entry becomes (or already is) its own GitHub repository
+# Polyrepo inventory — paths are relative to the HUB root
 repositories:
   services:
     - name: "service-example"
       intent: "health and ping domain example"
-      path: "scaffolds/service-example"   # local scaffold path inside the hub
-      remote: ""                        # e.g. https://github.com/your-org/service-example.git
+      path: "../repos/service-example"      # working copy (product code)
+      scaffold: "scaffolds/service-example" # mold inside the hub
+      remote: ""                            # e.g. https://github.com/your-org/service-example.git
       port: 8001
       python: "3.13"
       package_manager: "uv"
-      databases: ["postgresql"]         # postgresql | mongodb | none
+      databases: ["postgresql"]             # postgresql | mongodb | none
       messaging: ["rabbitmq"]
       cache: ["redis"]
 
   frontends:
     - name: "ui-example"
       context: "example admin surface"
-      path: "scaffolds/ui-example"
+      path: "../repos/ui-example"
+      scaffold: "scaffolds/ui-example"
       remote: ""
       port: 3000
       package_manager: "yarn"
@@ -54,7 +64,7 @@ repositories:
 #   bundled_infra  — docker compose also starts dependency technologies
 runtime:
   local_mode: "bundled_infra"   # external_infra | bundled_infra
-  start_apps: true              # when true, start-all also opens scaffold app windows
+  start_apps: true              # when true, start-all opens app windows from repos/
   skip_infra_if_ports_healthy: true  # in bundled mode, skip compose if ports already respond
 
 # Deploy target (choose during INSTALL setup)

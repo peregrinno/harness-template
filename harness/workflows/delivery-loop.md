@@ -4,7 +4,7 @@
 
 ```text
 Plan (read vault + task + constitutions)
-  → Execute (code in target polyrepo)
+  → Execute (code in target polyrepo under `../repos/<name>`)
   → Computational sensors (lint, typecheck, unit/acceptance/component)
   → QA agent (acceptance within service + cross-service e2e when needed)
   → security-analyst (auto-fix critical findings)
