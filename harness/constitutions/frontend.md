@@ -26,6 +26,7 @@ Check `.cursor/skills/` before scaffolding UI work.
 - LLM docs: https://ant.design/docs/react/introduce.md
 - Prefer latest stable `antd`, then align React/Next/peers.
 - Do not install `@types/antd`.
+- Brand colors/typography/assets: **must** follow hub `harness/supply/visual-identity.md` and `harness/supply/assets/` when filled.
 
 ## 1. Atomic Design
 

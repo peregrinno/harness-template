@@ -49,7 +49,26 @@ repositories:
       framework: "next"
       design_system: "antd"
 
-# Shared infrastructure expected to be already running via harness/scripts/windows
+# Runtime: how local start scripts behave
+#   external_infra — Postgres/Redis/Rabbit/Mongo already run on the machine; only start apps
+#   bundled_infra  — docker compose also starts dependency technologies
+runtime:
+  local_mode: "bundled_infra"   # external_infra | bundled_infra
+  start_apps: true              # when true, start-all also opens scaffold app windows
+  skip_infra_if_ports_healthy: true  # in bundled mode, skip compose if ports already respond
+
+# Deploy target (choose during INSTALL setup)
+deploy:
+  target: "railway"             # railway | portainer
+  railway:
+    # Per-service Railway config templates live under harness/templates/deploy/railway/
+    generate_railway_toml: true
+  portainer:
+    # Stack files for Portainer live under harness/templates/deploy/portainer/
+    generate_stack_compose: true
+    endpoint_hint: ""           # optional Portainer URL for docs only
+
+# Shared infrastructure endpoints (used by apps always; compose only in bundled_infra)
 infra:
   postgresql:
     version: "17"
@@ -100,8 +119,12 @@ stack:
     orm: "sqlalchemy2-async"
     migrations: "alembic"
     architecture: "hexagonal"
+    logging: "loguru"
     tests: ["unit", "acceptance"]
     pre_commit: ["ruff", "pytest", "semver-check"]
+  data:
+    constitution: "harness/constitutions/data.md"
+    ownership: "database-per-service"
   frontend:
     language: "typescript"
     package_manager: "yarn"

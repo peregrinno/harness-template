@@ -1,0 +1,27 @@
+# Example Portainer stack (adapt service images/tags per environment).
+# Use when project.yaml deploy.target = portainer.
+
+services:
+  service-example:
+    image: your-registry/service-example:latest
+    ports:
+      - "8001:8000"
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+      REDIS_URL: ${REDIS_URL}
+      RABBITMQ_URL: ${RABBITMQ_URL}
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  ui-example:
+    image: your-registry/ui-example:latest
+    ports:
+      - "3000:3000"
+    environment:
+      NEXT_PUBLIC_API_BASE: ${NEXT_PUBLIC_API_BASE}
+
+  # Include managed Postgres/Redis/Rabbit only if Portainer also hosts infra.
+  # Prefer external managed stores in production when possible.

@@ -1,0 +1,14 @@
+---
+description: Data & persistence constitution for microservices
+globs: "**/alembic/**/*,**/adapters/outbound/**/*,**/service-*/**/*,**/scaffolds/service-*/**/*"
+alwaysApply: false
+---
+
+# Data Constitution
+
+Read and obey `harness/constitutions/data.md`.
+
+- Database-per-service; no cross-service foreign keys.
+- Plural `snake_case` tables; `ix_` / `uq_` / `ck_` prefixes.
+- One service may use multiple stores; declare them in `project.yaml`.
+- Alembic expand/contract for breaking changes.

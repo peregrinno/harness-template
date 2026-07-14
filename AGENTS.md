@@ -15,7 +15,10 @@ You operate inside a **Harness Engineering hub** (polyrepo orchestration + Obsid
 
 1. Read `project.yaml` (identity, repos, ports, gates).
 2. If `.cursor/rules/` is missing or incomplete → follow `INSTALL.md`.
-3. Assume shared infra is already running via `harness/scripts/windows/start-all.bat`.
+3. Local runtime follows `project.yaml → runtime.local_mode`:
+   - `bundled_infra` — `start-all.bat` may start Docker deps
+   - `external_infra` — deps already on the machine; script only validates ports / starts apps
+   Never duplicate listeners on the same ports.
 
 ## System of record
 
@@ -24,7 +27,10 @@ You operate inside a **Harness Engineering hub** (polyrepo orchestration + Obsid
 | Project config | `project.yaml` |
 | Install / unlock | `INSTALL.md` |
 | Backend rules | `harness/constitutions/backend.md` |
+| Data / persistence | `harness/constitutions/data.md` |
 | Frontend rules | `harness/constitutions/frontend.md` |
+| Visual supply | `harness/supply/` |
+| Deploy templates | `harness/templates/deploy/` |
 | SDD workflow | `harness/workflows/sdd.md` |
 | Delivery / PEV loop | `harness/workflows/delivery-loop.md` |
 | Parallelism | `harness/workflows/parallel-orchestration.md` |
@@ -55,13 +61,15 @@ You operate inside a **Harness Engineering hub** (polyrepo orchestration + Obsid
 
 ## Stack defaults
 
-- Backend: Python 3.13, uv, FastAPI, SQLAlchemy 2 async, Alembic, hexagonal, unit + acceptance.
-- Frontend: TypeScript, yarn, React, Next.js, Ant Design (latest stable first), atomic design, component + Playwright.
-- Infra: PostgreSQL 17, Redis, RabbitMQ; MongoDB only when `project.yaml` enables it.
+- Backend: Python 3.13, uv, FastAPI, SQLAlchemy 2 async, Alembic, **loguru**, lifespan dependency pings, hexagonal, unit + acceptance.
+- Data: database-per-service — see `harness/constitutions/data.md`.
+- Frontend: TypeScript, yarn, React, Next.js, Ant Design, atomic design; brand from `harness/supply/`.
+- Infra: PostgreSQL 17, Redis, RabbitMQ; MongoDB when enabled.
+- Deploy: `railway` or `portainer` via `project.yaml → deploy.target`.
 
 ## Do not
 
 - Do not put long policy text in this file — link out.
-- Do not start services that `start-all.bat` already owns.
+- Do not start duplicate infra on ports already owned by `start-all.bat` / external services.
 - Do not write integration tests inside a service repo (unit + acceptance only). Cross-service e2e belongs to the QA agent.
 - Do not reply to the user in English unless they explicitly ask.

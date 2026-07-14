@@ -11,7 +11,7 @@ Um **hub polyrepo**, não um monólito de produto:
 | `project.yaml` | Identidade do projeto |
 | `AGENTS.md` | Mapa curto para qualquer agente |
 | `INSTALL.md` | Bootstrap (rules, pastas, unlock) |
-| `harness/` | Constitutions, workflows, sensors, CI templates, scripts Windows |
+| `harness/` | Constitutions, workflows, sensors, CI/deploy templates, scripts Windows, **supply** (assets + identidade visual) |
 | `vault/` | Cofre Obsidian (conhecimento em inglês) |
 | `sdd/` | Spec-Driven Development (Spec em PT; demais artefatos em EN) |
 | `qa/` `security/` `reviews/` | Relatórios versionados |
@@ -21,8 +21,11 @@ Um **hub polyrepo**, não um monólito de produto:
 ## Stack fixa
 
 - **Arquitetura**: microserviços + RabbitMQ + Redis + PostgreSQL 17 (+ MongoDB sob demanda)
-- **Backend**: Python 3.13, uv, FastAPI, SQLAlchemy 2.0 async, Alembic, hexagonal, unit + acceptance
-- **Frontend**: TypeScript, yarn, React, Next.js, Ant Design (versão mais recente primeiro), atomic, Playwright
+- **Backend**: Python 3.13, uv, FastAPI, SQLAlchemy 2.0 async, Alembic, loguru, hexagonal, unit + acceptance
+- **Dados**: database-per-service (`harness/constitutions/data.md`)
+- **Frontend**: TypeScript, yarn, React, Next.js, Ant Design, atomic, Playwright (+ `harness/supply/` para marca)
+- **Runtime local**: `bundled_infra` ou `external_infra` (`project.yaml`)
+- **Deploy**: Railway ou Portainer (`project.yaml → deploy.target`)
 - **Git**: `master ← stage ← develop` · `feature/fix(<n>)/<slug>` · commits `001-<titulo>`
 
 ## Começar

@@ -10,6 +10,7 @@ Read and obey `harness/constitutions/frontend.md`.
 
 - TypeScript + yarn + React + Next.js App Router + Ant Design.
 - Prefer latest stable antd, then align React/Next.
+- Before inventing colors/logos, read `harness/supply/visual-identity.md` and files under `harness/supply/assets/`.
 - Atomic layers; no upward imports.
 - Component tests + Playwright e2e.
 - LLM reference: https://ant.design/docs/react/introduce.md

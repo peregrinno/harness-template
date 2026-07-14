@@ -1,16 +1,16 @@
 @echo off
-REM Start all shared infrastructure for harness agents.
-REM Keep this window/process running while developing.
+REM Start local runtime per project.yaml (bundled_infra | external_infra).
+REM Keep dependency services available while developing; agents reuse fixed ports.
 setlocal
 cd /d "%~dp0"
 
 powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0start-all.ps1"
 if errorlevel 1 (
   echo.
-  echo [FAIL] Infra failed to start. See messages above.
+  echo [FAIL] start-all failed. Check project.yaml runtime.local_mode and ports.
   exit /b 1
 )
 
 echo.
-echo [OK] Infra is up. Leave this session alone; agents will use fixed ports from project.yaml.
+echo [OK] Runtime ready for agents ^(see project.yaml runtime.^)
 pause

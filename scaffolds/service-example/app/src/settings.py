@@ -13,6 +13,8 @@ class Settings(BaseSettings):
     rabbitmq_url: str = "amqp://guest:guest@localhost:5672/"
     service_name: str = "service-example"
     service_version: str = "0.1.0"
+    skip_dependency_pings: bool = False
+    log_level: str = "INFO"
 
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 

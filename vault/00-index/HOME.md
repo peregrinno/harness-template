@@ -4,6 +4,7 @@ Central map for the Obsidian vault (English knowledge). Open this folder as an O
 
 ## Navigation
 
+- [[Local Runtime Modes]]
 - [[Architecture Overview]]
 - [[Branching and Repositories]]
 - [[Harness Operating Model]]
@@ -11,6 +12,9 @@ Central map for the Obsidian vault (English knowledge). Open this folder as an O
 - Services: [[service-example]]
 - Frontends: [[ui-example]]
 - Changelogs: [[Changelog Index]]
+
+Brand kit (hub filesystem, not Obsidian notes): `harness/supply/visual-identity.md` + `harness/supply/assets/`.
+Deploy target: see `project.yaml` → `deploy.target` and `harness/templates/deploy/`.
 
 ## Tags
 

@@ -1,5 +1,9 @@
 """Testes de aceitação da API de saúde."""
 
+import os
+
+os.environ["SKIP_DEPENDENCY_PINGS"] = "true"
+
 from fastapi.testclient import TestClient
 
 from app.main import create_app

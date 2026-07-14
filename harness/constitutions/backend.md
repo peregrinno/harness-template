@@ -23,9 +23,11 @@ Before planning, check `.cursor/skills/` for scaffold/update skills.
 | Cache | Redis (async) |
 | Primary DB | PostgreSQL **17** |
 | Optional DB | MongoDB (only when `project.yaml` enables it) |
+| Logging | **loguru** (single config module under service core) |
 | Pre-commit | ruff, pytest, semver check |
 | Tests inside service | **unit** + **acceptance** |
 | Cross-service e2e | **QA agent only** (not inside the service repo) |
+| Data standards | See `harness/constitutions/data.md` |
 
 ### Async Connectors Policy
 Every library that talks to DB, cache, broker, or external HTTP must use **async** clients/drivers.
@@ -41,6 +43,9 @@ Every library that talks to DB, cache, broker, or external HTTP must use **async
 ```
 /app
   /src
+    /core
+      logging.py        # loguru setup ONLY (import everywhere else)
+      lifespan.py       # FastAPI lifespan: ping external deps
     /domain
       /commands
       /entities
@@ -75,6 +80,34 @@ Absolute from `app` only (`from app.src...`). Empty `__init__.py` files (no code
 - Map tables in outbound adapters / infrastructure mapping modules — keep domain entities free of ORM coupling when possible (translate at adapter boundary).
 - Alembic migrations required for every schema change.
 - Never use sync SQLAlchemy APIs in request paths.
+- Naming/indexes/FKs: follow `harness/constitutions/data.md`.
+
+## 2.1 Logging — loguru (MANDATORY)
+
+- Use **loguru** as the only application logger. Do not configure stdlib `logging` handlers ad hoc in adapters/use cases.
+- Centralize setup in `app/src/core/logging.py` (format, level, enqueue, diagnose flags).
+- Call `configure_logging()` once at process start (lifespan or `create_app` before routes).
+- Elsewhere: `from loguru import logger` after core config has run (or import `configure_logging` side effect from core).
+- Prefer structured messages with bound context (`logger.bind(service=..., request_id=...)`).
+- Never log secrets, tokens, or full PII payloads.
+
+## 2.2 Lifespan — dependency readiness (MANDATORY)
+
+Every FastAPI service **must** customize `lifespan` to verify external dependencies before serving traffic:
+
+1. Ping **PostgreSQL** (e.g. `SELECT 1`) when the service uses SQL.
+2. Ping **Redis** (`PING`) when cache/session deps are required.
+3. Ping **RabbitMQ** (open connection / declare check) when messaging is required.
+4. Ping **MongoDB** (`ping` command) when enabled for that service.
+5. Ping any other required external HTTP/gRPC dependency declared in settings.
+
+Rules:
+
+- Fail **fast** on startup if a required dependency is unreachable (do not silently degrade unless an ADR allows degraded mode).
+- Log each check result via loguru.
+- Expose liveness vs readiness clearly: process up ≠ ready; readiness reflects lifespan checks.
+- Keep ping helpers in outbound adapters or `core/` — use cases stay free of infra SDKs.
+- Acceptance tests may monkeypatch pings; production and local run use real targets from `project.yaml` / env.
 
 ## 3. Naming
 
@@ -119,9 +152,11 @@ Infrastructure ownership stays in hub templates when possible. Service PRs may i
 1. Entity + Command  
 2. Port(s)  
 3. Use case  
-4. Outbound adapter(s) + migration if needed  
+4. Outbound adapter(s) + migration if needed (data constitution)  
 5. Inbound adapter  
-6. Unit tests  
-7. Acceptance tests  
-8. `make lint && make test`  
-9. Semver bump if publishable API changed  
+6. Lifespan pings still cover all required deps  
+7. Logging via loguru (no new ad-hoc log frameworks)  
+8. Unit tests  
+9. Acceptance tests  
+10. `make lint && make test`  
+11. Semver bump if publishable API changed  

@@ -1,5 +1,6 @@
 services:
   postgres:
+    profiles: ["infra"]
     image: postgres:17
     container_name: harness-postgres
     environment:
@@ -17,6 +18,7 @@ services:
       retries: 10
 
   redis:
+    profiles: ["infra"]
     image: redis:7
     container_name: harness-redis
     ports:
@@ -28,6 +30,7 @@ services:
       retries: 10
 
   rabbitmq:
+    profiles: ["infra"]
     image: rabbitmq:3-management
     container_name: harness-rabbitmq
     ports:
@@ -39,8 +42,7 @@ services:
       timeout: 5s
       retries: 10
 
-  # Enabled by scripts when project.yaml infra.mongodb.enabled is true —
-  # default compose includes it stopped via profiles.
+  # Optional: enable with profile mongo (and infra.mongodb.enabled in project.yaml)
   mongo:
     image: mongo:7
     container_name: harness-mongo
