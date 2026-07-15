@@ -39,6 +39,7 @@ You operate inside a **Harness Engineering hub** (polyrepo orchestration + Obsid
 | SDD workflow | `harness/workflows/sdd.md` |
 | Delivery / PEV loop | `harness/workflows/delivery-loop.md` |
 | Parallelism | `harness/workflows/parallel-orchestration.md` |
+| Token economy | `harness/workflows/token-economy.md` |
 | Architecture knowledge | `vault/10-architecture/` |
 | Service maps | `vault/30-services/` |
 | Frontend maps | `vault/40-frontends/` |
@@ -59,11 +60,12 @@ You operate inside a **Harness Engineering hub** (polyrepo orchestration + Obsid
 4. **Commits**: `<seq:03d>-<brief-kebab-title>` (e.g. `001-add-health-endpoint`).
 5. **SDD order**: Spec → Designs → ADRs → Sprints → Tasks. Never skip.
 6. **Human gates**: stop after Spec; stop after Designs/ADRs/Sprints/Tasks pack; escalate after N failed QA/security/review loops (`project.yaml` → `gates`).
-7. **Every implementation task** implicitly includes QA acceptance/e2e orchestration — do not wait for the user to ask for tests.
-8. **After coding**: QA → security-analyst → code-reviewer (in that order). Critical security issues: fix immediately without waiting for a report approval.
-9. Prefer **parallel subagents** for independent tasks; each subagent owns its commit + push on the feature branch.
-10. End of feature: update vault (EN) + changelog entry; residual hub commits by the orchestrator.
+7. **Token economy**: Spec/pack in Ask/focused Composer; implement in bounded waves (one sprint or ≤ `max_tasks_per_wave`); see `harness/workflows/token-economy.md`.
+8. **`review_class`**: product_code/security_sensitive → QA → security → code-reviewer; scaffold → sensors only; docs/meta → skip triad (`project.yaml → agents.review_by_class`).
+9. Prefer **parallel subagents** within a wave; each owns **local** commits; push separately (`agents.orchestration.push_default`).
+10. End of feature/wave: update vault (EN) + changelog entry; residual hub commits by the orchestrator.
 11. Prefer **deterministic sensors** (lint, typecheck, tests, coverage) over prose. See `harness/sensors/`.
+12. Critical security issues: fix immediately without waiting for a report approval.
 
 ## Stack defaults
 

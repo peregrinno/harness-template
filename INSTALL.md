@@ -86,7 +86,8 @@ Quando o usuário disser “instalar harness” / “fazer setup” / “bootstr
    - `<workspace-root>/.cursor/rules/*.mdc`
    - `<workspace-root>/.cursor/agents/`
    - `<workspace-root>/.cursor/skills/`
-5. Lembrar o usuário: o Cursor precisa ter aberto o **workspace-root**, não apenas `harness-hub/`.
+5. Se o hub tiver `.cursorignore` e a raiz do workspace ainda não: **copiar** `harness-hub/.cursorignore` → `<workspace-root>/.cursorignore` (reduz indexação de venv/node_modules/locks/coverage).
+6. Lembrar o usuário: o Cursor precisa ter aberto o **workspace-root**, não apenas `harness-hub/`.
 
 Sem este passo, rules/agents/skills do harness ficam “invisíveis” ou parciais para o agente.
 
@@ -104,6 +105,7 @@ Garantir (criar/atualizar **em** `<workspace-root>/.cursor/rules/`) as rules aba
 | `30-frontend-atomic.mdc` | false | frontend + supply visual |
 | `40-git-branching.mdc` | true | branches / commits / `repos/` |
 | `50-vault-obsidian.mdc` | true | vault + changelog |
+| `60-token-economy.mdc` | true | bounded waves, review_class, lean context |
 
 ### 1.2 Pastas operacionais (dentro do hub)
 
@@ -171,8 +173,8 @@ Responda em português. Não inicie SDD até eu confirmar o project.yaml.
 
 1. Abrir `vault/` no Obsidian; completar `harness/supply/`.
 2. Rodar `start-all.bat`.
-3. Pedir a primeira Spec.
-4. Gates SDD + orquestração (QA → security → code-review).
+3. Pedir a primeira Spec (Ask / Composer focado).
+4. Gates SDD; implementação em ondas (1 sprint ou ≤3 tasks); QA → security → code-review só quando `review_class` exigir.
 
 Implementação de código: sempre nos paths em `repos/`, nunca no molde `scaffolds/` (exceto melhorias do próprio template).
 
@@ -186,7 +188,8 @@ Implementação de código: sempre nos paths em `repos/`, nunca no molde `scaffo
 - [ ] `project.yaml` preenchido (paths `../repos/...`)
 - [ ] `runtime.local_mode` escolhido
 - [ ] `deploy.target` = `railway` ou `portainer`
-- [ ] `.cursor/rules/*.mdc` ok na raiz (inclui data + messaging)
+- [ ] `.cursor/rules/*.mdc` ok na raiz (inclui data + messaging + token-economy)
+- [ ] `.cursorignore` na raiz do workspace (deps, locks, coverage)
 - [ ] `harness/supply/visual-identity.md` iniciado + `assets/`
 - [ ] Cada service/UI materializado em `repos/`
 - [ ] Pastas `sdd/ qa/ security/ reviews/ vault/**` ok

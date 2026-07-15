@@ -1,0 +1,44 @@
+# Dependencies & virtualenvs
+**/.venv/
+**/venv/
+**/node_modules/
+**/.yarn/cache/
+**/.pnpm-store/
+**/__pycache__/
+**/*.py[cod]
+**/.mypy_cache/
+**/.ruff_cache/
+**/.pytest_cache/
+**/htmlcov/
+**/coverage/
+**/.coverage
+**/.next/
+**/dist/
+**/build/
+**/out/
+
+# Lockfiles (noisy for agents; still committed in git)
+**/uv.lock
+**/yarn.lock
+**/package-lock.json
+**/pnpm-lock.yaml
+**/poetry.lock
+**/Cargo.lock
+
+# Local env & secrets
+**/.env
+**/.env.*
+!**/.env.example
+
+# Stale agent report dumps (keep latest STATUS; ignore bulky trees)
+qa/**/artifacts/
+qa/**/*.png
+qa/**/*.webm
+qa/**/*.zip
+security/**/artifacts/
+reviews/**/artifacts/
+
+# IDE / OS noise
+**/.DS_Store
+**/Thumbs.db
+**/*.log

@@ -6,12 +6,12 @@ alwaysApply: true
 # Git & Polyrepo
 
 - Mainline: `master <- stage <- develop`.
-- Features: `feature/fix(<number>)/<slug>`.
+- Features: `feature/SPEC(<number>)/<slug>`.
 - Commits: `<seq:03d>-<brief-kebab-title>` (example `001-add-health-endpoint`).
 - Backends: `service-<intent>`; frontends: `ui-<context>`.
 - Working copies live under `<workspace>/repos/<name>` (hub-relative path `../repos/<name>` in `project.yaml`).
 - Hub `scaffolds/` are molds only; after INSTALL, implement in `repos/`.
 - This hub orchestrates; each product folder under `repos/` is its own GitHub repository.
-- Subagents: each owns commit + push on the feature branch.
+- Subagents: each owns **local commits** on the feature branch; **push** only on request or wave-end (`agents.orchestration.push_default`).
 - Orchestrator: residual commit for leftovers (hub and/or remaining repo files).
 - Before coding: create the feature branch from `develop` in the impacted repo under `repos/`.
