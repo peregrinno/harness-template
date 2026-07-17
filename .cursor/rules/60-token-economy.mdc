@@ -1,0 +1,17 @@
+---
+description: Token economy — bounded waves, lean context, review_class
+alwaysApply: true
+---
+
+# Token Economy
+
+Follow `harness/workflows/token-economy.md` and `project.yaml → agents`.
+
+- Spec/Design pack: Ask or focused Composer — **no** implementers until pack OK.
+- Implement in waves: **one sprint** or **≤ max_tasks_per_wave** (default 3) — never full-Spec mega-orchestration.
+- Open only needed files; link Spec/ADR paths — do not paste the whole tree into prompts.
+- Known paths → Read/Grep; avoid broad `explore` / `very thorough`.
+- Agent for code; short chat for decisions (“aprovado, só D5”); prefer deltas.
+- Honor task `review_class`: product_code/security_sensitive → QA+security+review; scaffold → sensors; docs/meta → skip triad.
+- Commit locally first; push only on request or explicit wave-end (`push_default: false`).
+- One session ≈ one bounded context; cheaper model for routine, strong for Design/ADR/crypto.

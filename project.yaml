@@ -113,11 +113,26 @@ agents:
   always_reply_user_in: "pt-BR"
   code_and_reasoning_in: "en"
   docstrings_in: "pt-BR"
-  require_qa_on_every_task: true
-  require_security_analyst: true
-  require_code_reviewer: true
   prefer_parallel_subagents: true
   auto_fix_critical_security: true
+  # Token economy — see harness/workflows/token-economy.md
+  require_qa_on_every_task: false          # only when task.review_class needs it
+  require_security_analyst: true           # when review_class ∈ product_code | security_sensitive
+  require_code_reviewer: true              # when review_class ∈ product_code | security_sensitive
+  review_by_class:
+    product_code: ["qa", "security", "code_reviewer"]
+    security_sensitive: ["qa", "security", "code_reviewer"]
+    scaffold: ["sensors"]                  # lint/tests only — no QA/security/review agents
+    docs: []                               # vault/hub markdown only
+    meta: []                               # STATUS, changelogs, task status flips
+  orchestration:
+    max_tasks_per_wave: 3                  # never launch full Spec as one mega-wave
+    prefer_one_sprint_per_session: true
+    push_default: false                    # local commits first; push on explicit request or wave end
+    explore_thoroughness_default: "quick"  # use medium only when paths unknown; never "very thorough" by default
+  model_hints:
+    routine_implementation: "cheaper"      # scaffold, docs, mechanical edits
+    design_adr_crypto: "strong"            # Designs, ADRs, auth/crypto, architecture choices
 
 # Stack defaults (do not change casually — update vault + constitutions if you do)
 stack:

@@ -29,18 +29,27 @@ sdd/
 
 `NNN` is zero-padded sequential across the hub (`001`, `002`, …).
 
+## Mode & token economy
+
+Follow `harness/workflows/token-economy.md` and `project.yaml → agents`.
+
+- **Spec + Designs/ADRs/Sprints/Tasks pack**: Ask mode or focused Composer — do **not** spawn implementers.
+- **Implementation**: separate Agent session(s), **one sprint or ≤ `max_tasks_per_wave` tasks** per wave.
+- Prefer short decision messages (“aprovado”, “só D5”) over re-running the whole pack.
+- Delta work beats “alinha tudo ao Spec”.
+
 ## Mandatory context before writing a Spec
 
-The agent MUST read, in order:
+The agent MUST read, in order (once per Spec drafting session — do not re-dump every refinement turn):
 
 1. `project.yaml`
 2. `AGENTS.md`
-3. `vault/00-index/HOME.md` and relevant vault notes
-4. `harness/constitutions/*`
-5. Existing related specs under `sdd/`
+3. `vault/00-index/HOME.md` and **relevant** vault notes only
+4. Constitutions that apply to the impact surface (not every constitution if N/A)
+5. Existing related specs under `sdd/` (titles/STATUS first; open bodies only if related)
 6. Target service/UI README under `../repos/<name>` (paths from `project.yaml`)
 
-Never start from zero inventing architecture.
+Never start from zero inventing architecture. Do not attach the entire vault or every prior Spec into the prompt.
 
 ## Human gates
 
@@ -56,9 +65,9 @@ Never start from zero inventing architecture.
 
 [3] User approves pack
     → create feature branch on each impacted polyrepo
-    → parallel orchestration of tasks
-    → each task implicitly includes QA + security + code-review loop
-    → retries up to gates.max_qa_security_review_retries
+    → bounded orchestration (one sprint or 1–3 tasks per wave)
+    → each task follows review_class (product_code → QA+security+review; scaffold/docs → lighter)
+    → retries up to gates.max_qa_security_review_retries (when review agents run)
     → if still failing → STOP and escalate to human
 ```
 
@@ -116,6 +125,8 @@ Between gate 1 and gate 2 the agent must **not** ask permission to generate Desi
 ## Task ids
 ## Parallelization plan
 ## Definition of Done
+## Wave note
+- Implement this sprint in its own session/wave; do not batch every sprint of the Spec together.
 ```
 
 ## Task template — English
@@ -125,12 +136,16 @@ Between gate 1 and gate 2 the agent must **not** ask permission to generate Desi
 ## Repo
 ## Sprint
 ## Goal
-## Constraints (links)
+## review_class: product_code | security_sensitive | scaffold | docs | meta
+## Constraints (links only — do not paste full Spec/ADRs)
 ## Implementation notes
-## Implicit mandatory follow-ups
-- [ ] QA agent (acceptance/e2e as applicable) + report under qa/
-- [ ] security-analyst (+ auto-fix critical)
-- [ ] code-reviewer (duplication, coherence, accidental deletions)
+## owns_paths
+## depends_on
+## parallel_group
+## Implicit follow-ups (from project.yaml → agents.review_by_class)
+- product_code / security_sensitive: QA + security-analyst + code-reviewer
+- scaffold: local sensors only
+- docs / meta: none
 ## Status: todo | doing | blocked | done
 ## Commits
 ## Subagent
@@ -139,9 +154,10 @@ Between gate 1 and gate 2 the agent must **not** ask permission to generate Desi
 ## Task handling rules
 
 - When finishing a task, update its Status and linked sprint checklist.
-- Every task that changes product code is incomplete until QA + security + review pass (or human escalates).
-- Prefer splitting into parallelizable tasks at sprint design time.
+- `product_code` / `security_sensitive` tasks are incomplete until QA + security + review pass (or human escalates).
+- `scaffold` / `docs` / `meta` skip the heavy agent triad unless the human asks otherwise.
+- Prefer splitting into parallelizable tasks at sprint design time — but **execute** in bounded waves.
 
 ## STATUS.md
 
-Track overall spec progress, gate timestamps, branch names, and final merge readiness.
+Track overall spec progress, gate timestamps, branch names, wave boundaries, and final merge readiness.

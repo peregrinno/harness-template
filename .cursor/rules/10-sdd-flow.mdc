@@ -5,10 +5,10 @@ alwaysApply: true
 
 # SDD Flow
 
-Follow `harness/workflows/sdd.md` strictly.
+Follow `harness/workflows/sdd.md` and `token-economy.md` strictly.
 
-1. New capability request → draft `sdd/<NNN>-<slug>/SPEC.md` in **Portuguese** using vault + constitutions → **STOP** for human approval.
+1. New capability request → draft `sdd/<NNN>-<slug>/SPEC.md` in **Portuguese** (Ask/focused Composer) → **STOP** for human approval.
 2. On Spec approval → generate Designs, ADRs, Sprints, Tasks in **English** without asking whether to continue → **STOP** and ask if the pack is OK to implement.
-3. On pack approval → create feature branches, orchestrate parallel implementation, run delivery loop until done.
-4. Update task status files as work finishes; write changelog under `vault/70-changelogs/`.
+3. On pack approval → create feature branches; implement in **bounded waves** (one sprint or ≤ `max_tasks_per_wave` tasks); run delivery loop per `review_class`.
+4. Update task status files as work finishes; write changelog under `vault/70-changelogs/` when the feature/wave closes.
 5. Never skip Spec→Designs→ADRs→Sprints→Tasks order.
