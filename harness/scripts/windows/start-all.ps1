@@ -96,7 +96,7 @@ function Start-BundledInfra {
   if ($mongoEnabled) { $already = $already -and (Test-TcpPort "localhost" $mongoPort) }
 
   if ($skipIfHealthy -and $already) {
-    Write-Host "==> Dependency ports already healthy — skipping docker compose"
+    Write-Host "==> Dependency ports already healthy - skipping docker compose"
     return
   }
 
@@ -115,7 +115,7 @@ function Start-BundledInfra {
 
 function Start-Apps {
   if (-not $startApps) {
-    Write-Host "==> start_apps=false — not launching app windows"
+    Write-Host "==> start_apps=false - not launching app windows"
     Write-Host "    Prefer: cd ..\repos\service-example && make run"
     Write-Host "            cd ..\repos\ui-example && yarn dev"
     return
@@ -133,7 +133,17 @@ function Start-Apps {
 
   if ($ui -and (Test-Path (Join-Path $ui "package.json"))) {
     Write-Host "==> Starting ui-example from $ui"
-    Start-Process powershell -ArgumentList "-NoExit", "-Command", "cd '$ui'; yarn dev"
+    # node_modules is not copied from scaffolds; install on first run if next is missing
+    $uiBoot = @"
+cd '$ui'
+if (-not (Test-Path 'node_modules\.bin\next.cmd') -and -not (Test-Path 'node_modules\.bin\next')) {
+  Write-Host '==> node_modules missing - running yarn install...'
+  yarn install
+  if (`$LASTEXITCODE -ne 0) { Write-Error 'yarn install failed'; exit 1 }
+}
+yarn dev
+"@
+    Start-Process powershell -ArgumentList "-NoExit", "-Command", $uiBoot
   } else {
     Write-Host "==> ui-example not found under repos/ or scaffolds/"
   }

@@ -53,3 +53,4 @@ If `.cursor` remains only under `harness-hub/` while Cursor is opened on `<works
 
 - Branching: [[Branching and Repositories]]
 - Local runtime: [[Local Runtime Modes]]
+- Token economy: [[Token Economy]]

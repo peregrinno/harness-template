@@ -5,10 +5,9 @@ description: Run the full SDD lifecycle with correct languages and human gates. 
 
 # Skill: sdd-flow
 
-Follow `harness/workflows/sdd.md` and `.cursor/rules/10-sdd-flow.mdc`.
+Follow `harness/workflows/sdd.md`, `token-economy.md`, and `.cursor/rules/10-sdd-flow.mdc`.
 
-- Spec in Portuguese; stop for approval.
-- On approval: Designs, ADRs, Sprints, Tasks in English automatically.
-- Stop again before implementation.
-- On approval: invoke parallel-orchestrator behaviour.
-- Always attach implicit QA/security/review tasks — do not wait for the user to ask.
+- Spec + pack: Ask / focused Composer (Portuguese Spec; English Designs/ADRs/Sprints/Tasks).
+- Stop for Spec approval; on approval generate pack automatically; stop again before implementation.
+- On pack OK: invoke parallel-orchestrator for **one sprint or ≤3 tasks** — not the whole Spec at once.
+- Honor `review_class` for QA/security/review; do not auto-spawn the triad on scaffold/docs/meta.
